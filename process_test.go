@@ -31,3 +31,56 @@ func TestProcess(t *testing.T) {
 		}
 	}
 }
+
+func TestProcessFull(t *testing.T) {
+	t.Parallel()
+
+	input := "set sushi\r\n" +
+		"delicious\r\n" +
+		"set topcoder\r\n" +
+		"fun\r\n" +
+		"get sushi topcoder\r\n" +
+		"get sushi\r\n" +
+		"delete sushi\r\n" +
+		"get sushi\r\n" +
+		"get topcoder\r\n" +
+		"get topcoder sushi\r\n" +
+		"delete sushi\r\n" +
+		"stats\r\n" +
+		"quit\r\n"
+	output := "STORED\r\n" +
+		"STORED\r\n" +
+		"VALUE sushi\r\n" +
+		"delicious\r\n" +
+		"VALUE topcoder\r\n" +
+		"fun\r\n" +
+		"END\r\n" +
+		"VALUE sushi\r\n" +
+		"delicious\r\n" +
+		"END\r\n" +
+		"DELETED\r\n" +
+		"END\r\n" +
+		"VALUE topcoder\r\n" +
+		"fun\r\n" +
+		"END\r\n" +
+		"VALUE topcoder\r\n" +
+		"fun\r\n" +
+		"END\r\n" +
+		"NOT_FOUND\r\n" +
+		"cmd_get 7\r\n" +
+		"cmd_set 2\r\n" +
+		"get_hits 5\r\n" +
+		"get_misses 2\r\n" +
+		"delete_hits 1\r\n" +
+		"delete_misses 1\r\n" +
+		"curr_items 1\r\n" +
+		"limit_items 65535\r\n" +
+		"END\r\n"
+	s := NewStore()
+	w := new(bytes.Buffer)
+	s.Process(strings.NewReader(input), w)
+	result := w.String()
+	if result != output {
+		t.Errorf("expecting: %s\ngot: %s", output, result)
+	}
+}
