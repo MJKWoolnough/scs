@@ -18,7 +18,7 @@ func TestStats(t *testing.T) {
 			cs{
 				"cmd_get": Increment,
 			},
-			"cmd_get 1\r\ncmd_set 0\r\nget_hits 0\r\nget_misses 0\r\ndelete_hits 0\r\ndelete_misses 0\r\ncurr_items 0\r\nlimit_items 65535\r\n",
+			"cmd_get 1\r\ncmd_set 0\r\nget_hits 0\r\nget_misses 0\r\ndelete_hits 0\r\ndelete_misses 0\r\ncurr_items 0\r\nlimit_items 65535\r\nEND\r\n",
 		},
 		{
 			cs{
@@ -29,7 +29,7 @@ func TestStats(t *testing.T) {
 				"delete_hits":   SetStat(4),
 				"delete_misses": SetStat(5),
 			},
-			"cmd_get 0\r\ncmd_set 1\r\nget_hits 2\r\nget_misses 3\r\ndelete_hits 4\r\ndelete_misses 5\r\ncurr_items 0\r\nlimit_items 65535\r\n",
+			"cmd_get 0\r\ncmd_set 1\r\nget_hits 2\r\nget_misses 3\r\ndelete_hits 4\r\ndelete_misses 5\r\ncurr_items 0\r\nlimit_items 65535\r\nEND\r\n",
 		},
 	}
 	s := NewStore()

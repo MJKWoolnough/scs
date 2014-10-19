@@ -12,6 +12,7 @@ const (
 	StatCurrItems  = "curr_items"
 	StatLimitItems = "limit_items"
 	StatCmdStats   = "cmd_stats"
+	StatsCmdSuffix = "END"
 )
 
 // Stats prints store usage statistics to the Writer
@@ -20,7 +21,7 @@ func Stats(s *Store, _ io.Reader, w io.Writer, _ string) {
 	for _, stat := range allStats {
 		b.Write([]byte(stat + " " + strconv.Itoa(s.ReadStat(stat)) + commandDelim))
 	}
-	b.Write([]byte(StatCurrItems + " " + strconv.Itoa(len(s.data)) + commandDelim + StatLimitItems + " " + strconv.FormatUint(s.limit, 10) + commandDelim))
+	b.Write([]byte(StatCurrItems + " " + strconv.Itoa(len(s.data)) + commandDelim + StatLimitItems + " " + strconv.FormatUint(s.limit, 10) + commandDelim + StatsCmdSuffix + commandDelim))
 	_, err := b.WriteTo(w)
 	if err != nil {
 		s.logFunc(err)
